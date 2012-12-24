@@ -14,6 +14,10 @@
 		1D60589F0D05DD5A006BFB54 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1D30AB110D05D00D00671497 /* Foundation.framework */; };
 		1DF5F4E00D08C38300B7A737 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1DF5F4DF0D08C38300B7A737 /* UIKit.framework */; };
 		288765A50DF7441C002DB57D /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 288765A40DF7441C002DB57D /* CoreGraphics.framework */; };
+		35B12F061688A3EF002C0B9C /* Character.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 35B12F041688A3EF002C0B9C /* Character.cpp */; };
+		35B12F091688A405002C0B9C /* Magic.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 35B12F071688A405002C0B9C /* Magic.cpp */; };
+		35B12F0C1688A41A002C0B9C /* Equipment.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 35B12F0A1688A41A002C0B9C /* Equipment.cpp */; };
+		35B12F0F1688A488002C0B9C /* Place.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 35B12F0D1688A488002C0B9C /* Place.cpp */; };
 		BF1373EF128A898400D9F789 /* OpenGLES.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BF492D4B1289302400A09262 /* OpenGLES.framework */; };
 		BF1373F0128A899500D9F789 /* libxml2.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = BF492C21128924A800A09262 /* libxml2.dylib */; };
 		BF1373F1128A899E00D9F789 /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = BF492B6912891AC600A09262 /* libz.dylib */; };
@@ -59,6 +63,14 @@
 		1D6058910D05DD3D006BFB54 /* qujingzhilu.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = qujingzhilu.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		1DF5F4DF0D08C38300B7A737 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		288765A40DF7441C002DB57D /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
+		35B12F041688A3EF002C0B9C /* Character.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Character.cpp; sourceTree = "<group>"; };
+		35B12F051688A3EF002C0B9C /* Character.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Character.h; sourceTree = "<group>"; };
+		35B12F071688A405002C0B9C /* Magic.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Magic.cpp; sourceTree = "<group>"; };
+		35B12F081688A405002C0B9C /* Magic.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Magic.h; sourceTree = "<group>"; };
+		35B12F0A1688A41A002C0B9C /* Equipment.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Equipment.cpp; sourceTree = "<group>"; };
+		35B12F0B1688A41A002C0B9C /* Equipment.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Equipment.h; sourceTree = "<group>"; };
+		35B12F0D1688A488002C0B9C /* Place.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Place.cpp; sourceTree = "<group>"; };
+		35B12F0E1688A488002C0B9C /* Place.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Place.h; sourceTree = "<group>"; };
 		781C33B11547F06B00633F88 /* OpenAL.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenAL.framework; path = System/Library/Frameworks/OpenAL.framework; sourceTree = SDKROOT; };
 		781C33B31547F06B00633F88 /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = System/Library/Frameworks/AudioToolbox.framework; sourceTree = SDKROOT; };
 		781C33B51547F06B00633F88 /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
@@ -175,6 +187,14 @@
 				BF23D4E4143315EB00657E08 /* AppDelegate.h */,
 				BF23D4E5143315EB00657E08 /* HelloWorldScene.cpp */,
 				BF23D4E6143315EB00657E08 /* HelloWorldScene.h */,
+				35B12F041688A3EF002C0B9C /* Character.cpp */,
+				35B12F051688A3EF002C0B9C /* Character.h */,
+				35B12F071688A405002C0B9C /* Magic.cpp */,
+				35B12F081688A405002C0B9C /* Magic.h */,
+				35B12F0A1688A41A002C0B9C /* Equipment.cpp */,
+				35B12F0B1688A41A002C0B9C /* Equipment.h */,
+				35B12F0D1688A488002C0B9C /* Place.cpp */,
+				35B12F0E1688A488002C0B9C /* Place.h */,
 			);
 			name = Classes;
 			path = ../Classes;
@@ -286,6 +306,10 @@
 				D4ABB4B313B4395300552E6E /* main.m in Sources */,
 				BF23D4E7143315EB00657E08 /* AppDelegate.cpp in Sources */,
 				BF23D4E8143315EB00657E08 /* HelloWorldScene.cpp in Sources */,
+				35B12F061688A3EF002C0B9C /* Character.cpp in Sources */,
+				35B12F091688A405002C0B9C /* Magic.cpp in Sources */,
+				35B12F0C1688A41A002C0B9C /* Equipment.cpp in Sources */,
+				35B12F0F1688A488002C0B9C /* Place.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
