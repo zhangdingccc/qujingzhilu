@@ -2,6 +2,7 @@
 build/*
 *.pbxuser
 *.modelv3
+*.xcuserstate
 
 # old skool
 .svn
