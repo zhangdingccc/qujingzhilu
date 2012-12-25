@@ -29,6 +29,8 @@ bool AppDelegate::applicationDidFinishLaunching() {
     // We use the ratio of resource's height to the height of design resolution,
     // this can make sure that the resource's height could fit for the height of design resolution.
 
+	CCLOG("framesize.height %f framesize.width %f",frameSize.height,frameSize.width);
+
     // if the frame's height is larger than the height of medium resource size, select large resource.
 	if (frameSize.height > mediumResource.size.height)
 	{ 
@@ -48,8 +50,17 @@ bool AppDelegate::applicationDidFinishLaunching() {
         pDirector->setContentScaleFactor(MIN(smallResource.size.height/designResolutionSize.height, smallResource.size.width/designResolutionSize.width));
     }
 
-    //currently only test using share folder
-    CCFileUtils::sharedFileUtils()->setResourceDirectory("share");
+    //add two special cases
+    if(frameSize.height == 600.0 && frameSize.width == 1024.0)
+    {
+         CCFileUtils::sharedFileUtils()->setResourceDirectory(galaxypadResource.directory);
+        pDirector->setContentScaleFactor(MIN(galaxypadResource.size.height/designResolutionSize.height, galaxypadResource.size.width/designResolutionSize.width));
+    }
+    if(frameSize.height == 640.0 && frameSize.width == 960.0)
+    {
+         CCFileUtils::sharedFileUtils()->setResourceDirectory(retinaResource.directory);
+        pDirector->setContentScaleFactor(MIN(retinaResource.size.height/designResolutionSize.height, retinaResource.size.width/designResolutionSize.width));
+    }
 
     // turn on display FPS
     pDirector->setDisplayStats(true);

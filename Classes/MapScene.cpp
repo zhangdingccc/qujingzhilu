@@ -1,6 +1,7 @@
 #include "MapScene.h"
 #include "AppMacros.h"
 #include "MapControllerScene.h"
+#include "City.h"
 //USING_NS_CC;
 
 using namespace cocos2d;
@@ -50,16 +51,16 @@ bool MapLayer::init()
     this->addChild(pSprite, 0);
 
     // add city
-    pSprite = CCSprite::create("home.png");
+    pSprite = City::create("home.png");
 
     // position the sprite on the center of the screen
     pSprite->setPosition(ccp(visibleSize.width/4 + origin.x, visibleSize.height/2 + origin.y));
 
     // add the sprite as a child to this layer
     this->addChild(pSprite, 0);
-
+CCLOG("Test String");
     // add city
-    pSprite = CCSprite::create("home.png");
+    pSprite = City::create("home.png");
 
     // position the sprite on the center of the screen
     pSprite->setPosition(ccp(visibleSize.width*3/4 + origin.x, visibleSize.height/2 + origin.y));
@@ -67,6 +68,7 @@ bool MapLayer::init()
     // add the sprite as a child to this layer
     this->addChild(pSprite, 0);
 
+		/*
 		// Create a "close" menu item with close icon, it's an auto release object.
 		CCMenuItemImage *pCloseItem = CCMenuItemImage::create(
 			"normal.png",
@@ -85,6 +87,19 @@ bool MapLayer::init()
 
 		// Add the menu to HelloWorld layer as a child layer.
 		this->addChild(pMenu, 1);
+		*/
+
+    // Label Item (CCLabelBMFont)
+    CCLabelBMFont* label = CCLabelBMFont::create("Chapters", "fonts/bitmapFontChinese.fnt");
+    CCMenuItemLabel* item1 = CCMenuItemLabel::create(label, this, menu_selector(MapLayer::menuCloseCallback));
+    #define FONT_SCALE 1.5f
+    item1->setScale( FONT_SCALE );
+
+    item1->setPosition(ccp(origin.x + visibleSize.width - item1->getContentSize().width*FONT_SCALE/2 - item1->getContentSize().height*FONT_SCALE/2,
+                                    origin.y + item1->getContentSize().height*FONT_SCALE));
+    CCMenu* menu = CCMenu::create( item1, NULL);
+    menu->setPosition(CCPointZero);
+    this->addChild(menu, 1);
 
 	return true;    
 }

@@ -82,7 +82,7 @@ bool MapControllerLayer::init()
 
     // add the sprite as a child to this layer
     this->addChild(pSprite, 0);
-
+		/*
 		// Create a "close" menu item with close icon, it's an auto release object.
 		CCMenuItemImage *pCloseItem = CCMenuItemImage::create(
 			"normal.png",
@@ -101,6 +101,19 @@ bool MapControllerLayer::init()
 
 		// Add the menu to HelloWorld layer as a child layer.
 		this->addChild(pMenu, 1);
+		*/
+
+    // Label Item (CCLabelBMFont)
+    CCLabelBMFont* label = CCLabelBMFont::create("Back", "fonts/bitmapFontChinese.fnt");
+    CCMenuItemLabel* item1 = CCMenuItemLabel::create(label, this, menu_selector(MapControllerLayer::menuCloseCallback));
+    #define FONT_SCALE 1.5f
+    item1->setScale( FONT_SCALE );
+
+    item1->setPosition(ccp(origin.x + visibleSize.width - item1->getContentSize().width*FONT_SCALE/2 - item1->getContentSize().height*FONT_SCALE/2,
+                                    origin.y + item1->getContentSize().height*FONT_SCALE));
+    CCMenu* menu = CCMenu::create( item1, NULL);
+    menu->setPosition(CCPointZero);
+    this->addChild(menu, 1);
 
 	return true;    
 }
