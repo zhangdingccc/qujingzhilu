@@ -1,4 +1,5 @@
 #include "City.h"
+#include "BattleScene.h"
 
 City::City(void)
 {
@@ -8,9 +9,21 @@ City::~City(void)
 {
 }
 
+City* City::create(const char *pszFileName)
+{
+    City *pobSprite = new City();
+    if (pobSprite && pobSprite->initWithFile(pszFileName))
+    {
+        pobSprite->autorelease();
+        return pobSprite;
+    }
+    CC_SAFE_DELETE(pobSprite);
+    return NULL;
+}
+
 CCRect City::rect()
 {
-    CCSize s = boundingBox().size;
+    CCSize s = getContentSize();
     return CCRectMake(-s.width / 2, -s.height / 2, s.width, s.height);
 }
 
@@ -35,10 +48,14 @@ bool City::containsTouchLocation(CCTouch* touch)
 
 bool City::ccTouchBegan(CCTouch* touch, CCEvent* event)
 {
-    if (m_state != kPaddleStateUngrabbed) return false;
-    if ( !containsTouchLocation(touch) ) return false;
-    
-    m_state = kPaddleStateGrabbed;
+    if ( !containsTouchLocation(touch) ) 
+    {
+	m_state = kCityStateUnTouched;
+    	return false;
+    }else
+    {
+	m_state = kCityStateTouched;
+    }
     return true;
 }
 
@@ -50,25 +67,31 @@ void City::ccTouchMoved(CCTouch* touch, CCEvent* event)
     // Actually, it would be even more complicated since in the Cocos dispatcher
     // you get CCSets instead of 1 UITouch, so you'd need to loop through the set
     // in each touchXXX method.
-    
-    CCAssert(m_state == kPaddleStateGrabbed, L"Paddle - Unexpected state!");    
-    
+    /*	
     CCPoint touchPoint = touch->getLocation();
-    
+    CCLOG("touch x %f y %f", touchPoint.x, getPosition().y);
     setPosition( ccp(touchPoint.x, getPosition().y) );
-}
-
-CCObject* City::copyWithZone(CCZone *pZone)
-{
-    this->retain();
-    return this;
+    */
 }
 
 void City::ccTouchEnded(CCTouch* touch, CCEvent* event)
 {
-    CCAssert(m_state == kPaddleStateGrabbed, L"Paddle - Unexpected state!");    
-    
-    m_state = kPaddleStateUngrabbed;
+    if ( !containsTouchLocation(touch) ) 
+    {
+	m_state = kCityStateUnTouched;
+    }else
+    {
+	if(m_state == kCityStateTouched)
+	{
+		//CCLOG("City Touched");
+		BattleScene* pScene = BattleScene::create();
+		if (pScene)
+    		{
+        		CCDirector::sharedDirector()->pushScene(pScene);
+    		}  
+	}
+	m_state = kCityStateUnTouched;
+    }
 } 
 
 void City::touchDelegateRetain()

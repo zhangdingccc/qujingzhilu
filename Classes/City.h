@@ -5,19 +5,20 @@
 
 USING_NS_CC;
 
-typedef enum tagPaddleState 
+typedef enum CityState 
 {
-    kPaddleStateGrabbed,
-    kPaddleStateUngrabbed
+    kCityStateTouched,
+    kCityStateUnTouched
 } PaddleState; 
 
 class City : public CCSprite, public CCTargetedTouchDelegate
 {
-    PaddleState        m_state;
-
+    CityState        m_state;
 public:
     City(void);
     virtual ~City(void);
+
+    static City* create(const char *pszFileName);
 
     CCRect rect();
     virtual void onEnter();
@@ -26,7 +27,6 @@ public:
     virtual bool ccTouchBegan(CCTouch* touch, CCEvent* event);
     virtual void ccTouchMoved(CCTouch* touch, CCEvent* event);
     virtual void ccTouchEnded(CCTouch* touch, CCEvent* event);
-    virtual CCObject* copyWithZone(CCZone *pZone);
 
     virtual void touchDelegateRetain();
     virtual void touchDelegateRelease();
