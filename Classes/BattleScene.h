@@ -2,7 +2,9 @@
 #define __BATTLE_SCENE_H__
 
 #include "cocos2d.h"
+#include "cocos-ext.h"
 
+USING_NS_CC_EXT;
 USING_NS_CC;
 
 class BattleLayer : public cocos2d::CCLayer
@@ -32,6 +34,9 @@ public:
     bool init();
     CREATE_FUNC(BattleScene);
   
+    virtual void onEnter();
+    virtual void onExit();
+
     CC_SYNTHESIZE_READONLY(BattleLayer*, _layer, Layer);
 };
 

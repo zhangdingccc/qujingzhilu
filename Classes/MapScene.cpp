@@ -2,9 +2,13 @@
 #include "AppMacros.h"
 #include "MapControllerScene.h"
 #include "City.h"
-//USING_NS_CC;
+#include "SimpleAudioEngine.h"
 
+//USING_NS_CC;
+using namespace CocosDenshion;
 using namespace cocos2d;
+
+#define MUSIC_FILE "Scar15.mp3"
 
 bool MapScene::init()
 {
@@ -14,12 +18,31 @@ bool MapScene::init()
 		this->_layer->retain();
 		this->addChild(_layer);
 		
+		ProfileLayer* pl = ProfileLayer::create();
+		this->addChild(pl);
+
+	//load background music
+	SimpleAudioEngine::sharedEngine()->preloadBackgroundMusic( CCFileUtils::sharedFileUtils()->fullPathFromRelativePath(MUSIC_FILE) );
+	SimpleAudioEngine::sharedEngine()->setBackgroundMusicVolume(0.5);
+
 		return true;
 	}
 	else
 	{
 		return false;
 	}
+}
+
+void MapScene::onEnter()
+{
+CCScene::onEnter();
+SimpleAudioEngine::sharedEngine()->playBackgroundMusic(std::string(CCFileUtils::sharedFileUtils()->fullPathFromRelativePath(MUSIC_FILE)).c_str(), true);
+}
+
+void MapScene::onExit()
+{
+CCScene::onExit();
+//SimpleAudioEngine::sharedEngine()->end();
 }
 
 MapScene::~MapScene()
@@ -128,4 +151,42 @@ MapLayer::~MapLayer()
 		_label = NULL;
 	}
 */
+}
+
+bool ProfileLayer::init()
+{
+    if ( !CCLayer::init() )
+    {
+        return false;
+    }	
+    
+    CCSize visibleSize = CCDirector::sharedDirector()->getVisibleSize();
+    CCPoint origin = CCDirector::sharedDirector()->getVisibleOrigin();
+
+
+    // add profile picture
+    CCSprite* pSprite = CCSprite::create("myprofile.jpg");
+    CCSize s = pSprite->getContentSize();
+    pSprite->setPosition(ccp(s.width/2 + origin.x, visibleSize.height + origin.y - s.height/2));
+    this->addChild(pSprite, 0);
+
+    // add profile frame
+    pSprite = CCSprite::create("profileframe.png");
+    pSprite->setPosition(ccp(s.width/2 + origin.x, visibleSize.height + origin.y - s.height/2));
+    this->addChild(pSprite, 0);
+
+    //add hp
+    CCControlSlider* slider = CCControlSlider::create("sliderTrack.png", "sliderProgress.png", "sliderThumb.png");  
+        slider->setPosition(ccp(s.width+ slider->getContentSize().width/2 + origin.x, visibleSize.height + origin.y - s.height/2));  
+        slider->setMinimumValue(0);  
+        slider->setMaximumValue(5000);  
+        slider->setValue(3000);  
+       slider->setTouchEnabled(false);
+       this->addChild(slider);  
+
+	return true;    
+}
+
+ProfileLayer::~ProfileLayer()
+{
 }

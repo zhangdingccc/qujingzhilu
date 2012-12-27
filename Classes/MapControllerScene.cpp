@@ -2,9 +2,13 @@
 #include "AppMacros.h"
 #include "MapScene.h"
 #include "City.h"
-//USING_NS_CC;
+#include "SimpleAudioEngine.h"
 
+//USING_NS_CC;
+using namespace CocosDenshion;
 using namespace cocos2d;
+
+#define MUSIC_FILE "Scar12.mp3"
 
 bool MapControllerScene::init()
 {
@@ -14,12 +18,28 @@ bool MapControllerScene::init()
 		this->_layer->retain();
 		this->addChild(_layer);
 
+	//load background music
+	SimpleAudioEngine::sharedEngine()->preloadBackgroundMusic( CCFileUtils::sharedFileUtils()->fullPathFromRelativePath(MUSIC_FILE) );
+	SimpleAudioEngine::sharedEngine()->setBackgroundMusicVolume(0.5);
+
 		return true;
 	}
 	else
 	{
 		return false;
 	}
+}
+
+void MapControllerScene::onEnter()
+{
+CCScene::onEnter();
+SimpleAudioEngine::sharedEngine()->playBackgroundMusic(std::string(CCFileUtils::sharedFileUtils()->fullPathFromRelativePath(MUSIC_FILE)).c_str(), true);
+}
+
+void MapControllerScene::onExit()
+{
+CCScene::onExit();
+//SimpleAudioEngine::sharedEngine()->end();
 }
 
 void MapControllerScene::menuCloseCallback(CCObject* pSender)

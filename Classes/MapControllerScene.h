@@ -27,6 +27,9 @@ public:
     void menuCloseCallback(CCObject* pSender);
     CREATE_FUNC(MapControllerScene);
   
+    virtual void onEnter();
+    virtual void onExit();
+
     CC_SYNTHESIZE_READONLY(MapControllerLayer*, _layer, Layer);
 };
 

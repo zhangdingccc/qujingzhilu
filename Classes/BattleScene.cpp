@@ -1,10 +1,14 @@
 #include "BattleScene.h"
 #include "AppMacros.h"
 #include "MapControllerScene.h"
-#include "City.h"
-//USING_NS_CC;
 
+#include "SimpleAudioEngine.h"
+
+//USING_NS_CC;
+using namespace CocosDenshion;
 using namespace cocos2d;
+
+#define MUSIC_FILE "Battle01.mp3"
 
 bool BattleScene::init()
 {
@@ -14,6 +18,10 @@ bool BattleScene::init()
 		this->_layer->retain();
 		this->addChild(_layer);
 		
+	//load background music
+	SimpleAudioEngine::sharedEngine()->preloadBackgroundMusic( CCFileUtils::sharedFileUtils()->fullPathFromRelativePath(MUSIC_FILE) );
+	SimpleAudioEngine::sharedEngine()->setBackgroundMusicVolume(0.5);
+
 		return true;
 	}
 	else
@@ -21,6 +29,19 @@ bool BattleScene::init()
 		return false;
 	}
 }
+
+void BattleScene::onEnter()
+{
+CCScene::onEnter();
+SimpleAudioEngine::sharedEngine()->playBackgroundMusic(std::string(CCFileUtils::sharedFileUtils()->fullPathFromRelativePath(MUSIC_FILE)).c_str(), true);
+}
+
+void BattleScene::onExit()
+{
+CCScene::onExit();
+SimpleAudioEngine::sharedEngine()->end();
+}
+
 
 BattleScene::~BattleScene()
 {
@@ -51,13 +72,13 @@ bool BattleLayer::init()
     this->addChild(pSprite, 0);
 
     // add city
-    City* pcity = City::create("monkey.png");
+    pSprite = CCSprite::create("monkey.png");
 
     // position the sprite on the center of the screen
-    pcity->setPosition(ccp(visibleSize.width/4 + origin.x, visibleSize.height/2 + origin.y));
+    pSprite->setPosition(ccp(visibleSize.width/4 + origin.x, visibleSize.height/2 + origin.y));
 
     // add the sprite as a child to this layer
-    this->addChild(pcity, 0);
+    this->addChild(pSprite, 0);
 
     // add city
     enemy = CCSprite::create("spider.png");
@@ -68,26 +89,46 @@ bool BattleLayer::init()
     // add the sprite as a child to this layer
     this->addChild(enemy, 0);
 
-		/*
-		// Create a "close" menu item with close icon, it's an auto release object.
-		CCMenuItemImage *pCloseItem = CCMenuItemImage::create(
-			"normal.png",
-			"press.png",
-			this,
-			menu_selector(MapLayer::menuCloseCallback));
-		//CC_BREAK_IF(! pCloseItem);
 
-		pCloseItem->setPosition(ccp(origin.x + visibleSize.width - pCloseItem->getContentSize().width/2,
-                                    origin.y + pCloseItem->getContentSize().height/2));
+    // add my profile picture
+    pSprite = CCSprite::create("myprofile.jpg");
+    CCSize s = pSprite->getContentSize();
+    pSprite->setPosition(ccp(s.width/2 + origin.x, visibleSize.height + origin.y - s.height/2));
+    this->addChild(pSprite, 0);
 
-		// Create a menu with the "close" menu item, it's an auto release object.
-		CCMenu* pMenu = CCMenu::create(pCloseItem, NULL);
-		pMenu->setPosition(CCPointZero);
-		//CC_BREAK_IF(! pMenu);
+    // add my profile frame
+    pSprite = CCSprite::create("profileframe.png");
+    pSprite->setPosition(ccp(s.width/2 + origin.x, visibleSize.height + origin.y - s.height/2));
+    this->addChild(pSprite, 0);
 
-		// Add the menu to HelloWorld layer as a child layer.
-		this->addChild(pMenu, 1);
-		*/
+    //add my hp
+    CCControlSlider* slider = CCControlSlider::create("sliderTrack.png", "sliderProgress.png", "sliderThumb.png");  
+        slider->setPosition(ccp(s.width+ slider->getContentSize().width/2 + origin.x, visibleSize.height + origin.y - s.height/2));  
+        slider->setMinimumValue(0);  
+        slider->setMaximumValue(5000);  
+        slider->setValue(3000);  
+       slider->setTouchEnabled(false);
+       this->addChild(slider);  
+
+    // add enemy profile picture
+    pSprite = CCSprite::create("enemyprofile.jpg");
+    pSprite->setPosition(ccp(origin.x + visibleSize.width - s.width/2, visibleSize.height + origin.y - s.height/2));
+    this->addChild(pSprite, 0);
+
+    // add enemy profile frame
+    pSprite = CCSprite::create("profileframe.png");
+    pSprite->setPosition(ccp(origin.x + visibleSize.width - s.width/2, visibleSize.height + origin.y - s.height/2));
+    this->addChild(pSprite, 0);
+
+    //add enemy hp
+    slider = CCControlSlider::create("sliderTrack.png", "sliderProgress.png", "sliderThumb.png");  
+        slider->setPosition(ccp(origin.x + visibleSize.width - s.width- slider->getContentSize().width/2, visibleSize.height + origin.y - s.height/2));  
+        slider->setMinimumValue(0);  
+        slider->setMaximumValue(5000);  
+        slider->setValue(3000);  
+       slider->setTouchEnabled(false);
+       this->addChild(slider);  
+
 
     // Label Item (CCLabelBMFont)
     CCLabelBMFont* label = CCLabelBMFont::create("Back", "fonts/bitmapFontChinese.fnt");
@@ -162,11 +203,12 @@ void BattleLayer::actionCallbackN(CCNode *pSender)
 	this->removeChild(pSender);
 	//CCLOG("Particle finish");
 	CCActionInterval*  blink = CCBlink::create(2, 10);
+	if(enemy)
 	enemy->runAction( CCSequence::create( blink, CCCallFuncN::actionWithTarget(this, callfuncN_selector(BattleLayer::actionCallbackN)), NULL) );
    } 
-   if(enemy == (CCSprite*) pSender)
+   if(enemy && enemy == (CCSprite*) pSender)
    {
-   	this->removeChild(pSender);
+   	//this->removeChild(pSender);
    }
 }  
 

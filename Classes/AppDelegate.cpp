@@ -1,7 +1,9 @@
 #include "AppDelegate.h"
-#include "MapScene.h"
+#include "LoadingScene.h"
 #include "AppMacros.h"
+#include "SimpleAudioEngine.h"
 
+using namespace CocosDenshion;
 USING_NS_CC;
 
 AppDelegate::AppDelegate() {
@@ -69,7 +71,7 @@ bool AppDelegate::applicationDidFinishLaunching() {
     pDirector->setAnimationInterval(1.0 / 60);
 
     // create a scene. it's an autorelease object
-    CCScene *pScene = MapScene::create();
+    CCScene *pScene = LoadingScene::create();
 
     // run
     pDirector->runWithScene(pScene);
@@ -82,7 +84,7 @@ void AppDelegate::applicationDidEnterBackground() {
     CCDirector::sharedDirector()->stopAnimation();
 
     // if you use SimpleAudioEngine, it must be pause
-    // SimpleAudioEngine::sharedEngine()->pauseBackgroundMusic();
+     SimpleAudioEngine::sharedEngine()->pauseBackgroundMusic();
 }
 
 // this function will be called when the app is active again
@@ -90,5 +92,5 @@ void AppDelegate::applicationWillEnterForeground() {
     CCDirector::sharedDirector()->startAnimation();
 
     // if you use SimpleAudioEngine, it must resume here
-    // SimpleAudioEngine::sharedEngine()->resumeBackgroundMusic();
+     SimpleAudioEngine::sharedEngine()->resumeBackgroundMusic();
 }
